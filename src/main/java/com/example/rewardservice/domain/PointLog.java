@@ -18,13 +18,8 @@ import java.util.UUID;
 public class PointLog {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
     @Column(name = "log_id", updatable = false, nullable = false)
-    private UUID id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(nullable = false)
     private long earnedPoints;

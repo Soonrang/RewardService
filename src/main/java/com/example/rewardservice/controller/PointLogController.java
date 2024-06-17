@@ -20,14 +20,14 @@ public class PointLogController {
     private final PointLogService pointLogService;
 
     @PostMapping("/earn")
-    public ResponseEntity<UUID> earnReward(@RequestBody PointLogDTO pointLogDTO) {
-        UUID id = pointLogService.earnReward(pointLogDTO);
+    public ResponseEntity<String> earnReward(@RequestBody PointLogDTO pointLogDTO) {
+        String id = pointLogService.earnReward(pointLogDTO);
         return ResponseEntity.ok(id);
     }
 
     @PostMapping("/use")
-    public ResponseEntity<UUID> useReward(@RequestBody PointLogDTO pointLogDTO) {
-        UUID id = pointLogService.useReward(pointLogDTO);
+    public ResponseEntity<String> useReward(@RequestBody PointLogDTO pointLogDTO) {
+        String id = pointLogService.useReward(pointLogDTO);
         return ResponseEntity.ok(id);
     }
 

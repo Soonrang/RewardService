@@ -16,7 +16,7 @@ public class PointLogService {
 
     private final PointLogRepository pointLogRepository;
 
-    public UUID earnReward(PointLogDTO pointLogDTO) {
+    public String earnReward(PointLogDTO pointLogDTO) {
         PointLog pointLog = new PointLog();
         pointLog.setEarnedPoints(pointLogDTO.getEarnedPoints());
         pointLog.setRewardType(pointLogDTO.getRewardType());
@@ -30,7 +30,7 @@ public class PointLogService {
         return savedPointLog.getId();
     }
 
-    public UUID useReward(PointLogDTO pointLogDTO) {
+    public String useReward(PointLogDTO pointLogDTO) {
         PointLog pointLog = new PointLog();
         pointLog.setUsedPoints(pointLogDTO.getUsedPoints());
         pointLog.setRewardType(pointLogDTO.getRewardType());

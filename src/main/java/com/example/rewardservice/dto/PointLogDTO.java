@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class PointLogDTO {
-    private UUID id;
+    private String id;
     private Long earnedPoints;
     private String rewardType;
     private LocalDateTime createdAt;
