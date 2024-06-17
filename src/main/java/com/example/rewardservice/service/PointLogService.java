@@ -4,9 +4,11 @@ import com.example.rewardservice.domain.PointLog;
 import com.example.rewardservice.dto.PointLogDTO;
 import com.example.rewardservice.repository.PointLogRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,8 +35,8 @@ public class PointLogService {
     public String useReward(PointLogDTO pointLogDTO) {
         PointLog pointLog = new PointLog();
         pointLog.setUsedPoints(pointLogDTO.getUsedPoints());
-        pointLog.setRewardType(pointLogDTO.getRewardType());
         pointLog.setCreatedAt(LocalDateTime.now());
+        pointLog.setRewardType(" ");
 
         long previousTotalPoints = getLastTotalPoints();
         long totalPoints = previousTotalPoints - pointLog.getUsedPoints();
@@ -44,9 +46,23 @@ public class PointLogService {
         return savedPointLog.getId();
     }
 
+    public List<PointLogDTO> viewAll(){
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        List<PointLog> sortedPointLogDTO = this.pointLogRepository.findAll(sort);
 
-    public List<PointLog> viewAll(){
-        return this.pointLogRepository.findAll();
+        List<PointLogDTO> pointLogDTOList = new ArrayList<>();
+        sortedPointLogDTO.forEach(pointLog -> {
+            PointLogDTO pointLogDTO =new PointLogDTO();
+
+            pointLogDTO.setId(pointLog.getId());
+            pointLogDTO.setEarnedPoints(pointLog.getEarnedPoints());
+            pointLogDTO.setRewardType(pointLog.getRewardType());
+            pointLogDTO.setCreatedAt(pointLog.getCreatedAt());
+            pointLogDTO.setUsedPoints(pointLog.getUsedPoints());
+            pointLogDTOList.add(pointLogDTO);
+        });
+
+        return pointLogDTOList;
     }
 
     public Long getLatestTotalPoints() {
@@ -58,6 +74,7 @@ public class PointLogService {
         PointLog lastPointLog = pointLogRepository.findTopByOrderByCreatedAtDesc();
         return lastPointLog != null ? lastPointLog.getTotalPoints() : 0;
     }
+
 
 
 }

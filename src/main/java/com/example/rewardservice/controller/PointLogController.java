@@ -1,7 +1,5 @@
 package com.example.rewardservice.controller;
 
-
-import com.example.rewardservice.domain.PointLog;
 import com.example.rewardservice.dto.PointLogDTO;
 import com.example.rewardservice.service.PointLogService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/points")
@@ -31,15 +29,19 @@ public class PointLogController {
         return ResponseEntity.ok(id);
     }
 
+    //최신순 조회
     @GetMapping("/all")
-    public ResponseEntity<List<PointLog>> viewAll() {
-        List<PointLog> pointLogs = pointLogService.viewAll();
+    public ResponseEntity<List<PointLogDTO>> viewAll() {
+        List<PointLogDTO> pointLogs = pointLogService.viewAll();
         return ResponseEntity.ok(pointLogs);
     }
 
-    @GetMapping("/latest-total-points")
+    @GetMapping("/check-total-points")
     public ResponseEntity<Long> getLatestTotalPoints() {
         Long latestTotalPoints = pointLogService.getLatestTotalPoints();
         return ResponseEntity.ok(latestTotalPoints);
     }
+
+
+
 }
